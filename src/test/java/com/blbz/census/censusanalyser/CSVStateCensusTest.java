@@ -2,6 +2,7 @@ package com.blbz.census.censusanalyser;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.blbz.census.censusanalyser.exception.CensusAnalyserException;
 import com.blbz.census.censusanalyser.model.StateCensus;
@@ -10,8 +11,8 @@ import java.io.IOException;
 
 public class CSVStateCensusTest {
 
-	public static final String STATECODES_CSVFILE = "E:\\BridgrLabz\\IndianCensusAnalyser\\src\\main\\resources\\StateCode.csv";
-	public static final String STATECENSUS_CSVFILE = "E:\\BridgrLabz\\IndianCensusAnalyser\\src\\main\\resources\\IndianCensusData.csv";
+	public static final String STATECODES_CSVFILE = "E:\\myCodingWorld\\CensusAnalyser\\csvfiles\\StateCode.csv";
+	public static final String STATECENSUS_CSVFILE = "E:\\myCodingWorld\\CensusAnalyser\\csvfiles\\IndianCensusData.csv";
 	public static final String WRONG_FILE_PATH = "/Wrongfile.txt";
 
 	@Test
