@@ -1,5 +1,6 @@
 package com.blbz.census.censusanalyser;
 
+import com.blbz.census.censusanalyser.exception.CSVBuilderException;
 import com.blbz.census.censusanalyser.exception.CensusAnalyserException;
 import com.blbz.census.censusanalyser.model.StateCensuCsv;
 import com.blbz.census.censusanalyser.model.StateCodesCSV;
@@ -24,6 +25,8 @@ public class StateCensusAnalyser {
 		} catch (IOException e) {
 			throw new CensusAnalyserException(e.getMessage(),
 					CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM);
+		} catch (CSVBuilderException e) {
+			throw new CensusAnalyserException(e.getMessage(), e.type.name());
 		}
 	}
 
@@ -35,8 +38,10 @@ public class StateCensusAnalyser {
 		} catch (IOException e) {
 			throw new CensusAnalyserException(e.getMessage(),
 					CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM);
-		}
+		} catch (CSVBuilderException e) {
+			throw new CensusAnalyserException(e.getMessage(), e.type.name());
 
+		}
 	}
 
 	private <E> int getCount(Iterator<E> iterator) {
