@@ -55,8 +55,8 @@ public class StateCensusAnalyser {
 	public String getStateWiseSortedCensusData(String csvFilePath) throws CensusAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			List<StateCensuCsv> censusCSVList = csvBuilder.getCSVFileList(reader, StateCensuCsv.class);
-			Comparator<StateCensuCsv> censusCSVComparator = Comparator.comparing(census -> census.stateName);
+			List<StateCodesCSV> censusCSVList = csvBuilder.getCSVFileList(reader, StateCodesCSV.class);
+			Comparator<StateCodesCSV> censusCSVComparator = Comparator.comparing(census -> census.stCode);
 			this.sort(censusCSVList, censusCSVComparator);
 			String sortedStateCensusJson = new Gson().toJson(censusCSVList);
 			return sortedStateCensusJson;
@@ -68,11 +68,11 @@ public class StateCensusAnalyser {
 		}
 	}
 
-	private void sort(List<StateCensuCsv> censusCSVList, Comparator<StateCensuCsv> censusCSVComparator) {
+	private void sort(List<StateCodesCSV> censusCSVList, Comparator<StateCodesCSV> censusCSVComparator) {
 		for (int i = 0; i < censusCSVList.size() - 1; i++) {
 			for (int j = 0; j < censusCSVList.size() - i - 1; j++) {
-				StateCensuCsv censusCSV1 = censusCSVList.get(j);
-				StateCensuCsv censusCSV2 = censusCSVList.get(j + 1);
+				StateCodesCSV censusCSV1 = censusCSVList.get(j);
+				StateCodesCSV censusCSV2 = censusCSVList.get(j + 1);
 				if (censusCSVComparator.compare(censusCSV1, censusCSV2) > 0) {
 					censusCSVList.set(j, censusCSV2);
 					censusCSVList.set(j + 1, censusCSV1);
