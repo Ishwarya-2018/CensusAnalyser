@@ -18,7 +18,7 @@ public class StateCodesCSV {
 
 	public StateCodesCSV() {
 
-    }
+	}
 
 	public int getTin() {
 		return tin;

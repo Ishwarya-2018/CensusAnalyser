@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import com.blbz.census.censusanalyser.exception.CensusAnalyserException;
+import com.blbz.census.censusanalyser.model.StateCensuCsv;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 public class CSVStateCensusTest {
@@ -42,7 +45,7 @@ public class CSVStateCensusTest {
 	public void GivenTheStateCodeCsvFile_WhenCorrect_ButFileExtensionIncorrect_ShouldThrowCensusAnalyserException()
 			throws IOException {
 		try {
-			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(); 
 			ExpectedException exceptionRule = ExpectedException.none();
 			exceptionRule.expect(CensusAnalyserException.class);
 			stateCensusAnalyser.loadStateCode(WRONG_FILE_PATH);
@@ -74,6 +77,31 @@ public class CSVStateCensusTest {
 			Assert.assertEquals(37, numOfStateCode);
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM, e.type);
+		}
+
+	}
+
+	@Test
+	public void givenStateCensusData_WhenSortedOnStateFromFirst_ShouldReturnSortedResult() {
+		try {
+			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+			String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData(STATECENSUS_CSVFILE);
+			StateCensuCsv[] censusCSV = new Gson().fromJson(sortedCensusData, StateCensuCsv[].class);
+			Assert.assertEquals("Andhra Pradesh", censusCSV[0].stateName);
+		} catch (CensusAnalyserException e) {
+
+		}
+	}
+
+	@Test
+	public void givenStateCensusData_WhenSortedOnStateFromLast_ShouldReturnSortedResult() {
+		try {
+			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+			String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData(STATECENSUS_CSVFILE);
+			StateCensuCsv[] censusCSV = new Gson().fromJson(sortedCensusData, StateCensuCsv[].class);
+			Assert.assertEquals("West Bengal", censusCSV[28].stateName);
+		} catch (CensusAnalyserException e) {
+
 		}
 	}
 }
